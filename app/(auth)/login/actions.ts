@@ -29,5 +29,9 @@ export async function login(params: any, formData: FormData) {
     return { error: error.message };
   }
 
+  if (!data || !data.user) {
+    return { error: "存在しないユーザーです" };
+  }
+
   return { user: data.user };
 }

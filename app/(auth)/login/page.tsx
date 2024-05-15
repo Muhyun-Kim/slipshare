@@ -3,11 +3,13 @@
 import { useState } from "react";
 import useUserStore from "@/store/useUserStore";
 import { login } from "./actions";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const setUser = useUserStore((state) => state.setUser);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,9 +23,9 @@ export default function Login() {
 
     if (result.error) {
       setError(result.error as string);
-    } else {
+    } else if (result.user) {
       setUser(result.user);
-      window.location.href = "/";
+      router.push("/profile");
     }
   };
 
