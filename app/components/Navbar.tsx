@@ -38,7 +38,7 @@ export default function Navbar() {
               <Link href="/profile">プロフィール</Link>
             </li>
             <li>
-              <Link href="/community">コミュニティ</Link>
+              <Link href="/blog">ブログ</Link>
             </li>
           </>
         ) : (
