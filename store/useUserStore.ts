@@ -1,5 +1,5 @@
+import { User } from "@prisma/client";
 import { create } from "zustand";
-import { User } from "@supabase/supabase-js";
 import { persist } from "zustand/middleware";
 
 interface UserState {

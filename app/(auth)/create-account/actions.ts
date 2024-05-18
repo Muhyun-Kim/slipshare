@@ -3,6 +3,7 @@
 import { z } from "zod";
 
 import supabase from "@/lib/supabase";
+import prisma from "@/lib/prisma";
 
 const checkConfirmPassword = ({
   password,
@@ -15,6 +16,7 @@ const checkConfirmPassword = ({
 const formSchema = z
   .object({
     email: z.string().email(),
+    username: z.string().min(2),
     password: z.string().min(8),
     passwordConfirm: z.string().min(8),
   })
@@ -30,6 +32,7 @@ const formSchema = z
 export async function createAccount(params: any, formData: FormData) {
   const inputData = {
     email: formData.get("email"),
+    username: formData.get("username"),
     password: formData.get("password"),
     passwordConfirm: formData.get("passwordConfirm"),
   };
@@ -48,8 +51,21 @@ export async function createAccount(params: any, formData: FormData) {
   if (error) {
     console.error("Sign up error:", error.message);
     return { error: error.message };
-  } else {
-    console.log(data);
-    return { data: data };
+  }
+
+  const user = data.user;
+  if (user) {
+    try {
+      const customUser = await prisma.user.create({
+        data: {
+          userId: user.id,
+          username: validationResult.data.username,
+        },
+      });
+      return { data: customUser };
+    } catch (error) {
+      console.error("Prisma error:", error);
+      return { error };
+    }
   }
 }

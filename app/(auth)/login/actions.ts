@@ -1,5 +1,6 @@
 "use server";
 
+import prisma from "@/lib/prisma";
 import supabase from "@/lib/supabase";
 import { z } from "zod";
 
@@ -8,7 +9,7 @@ const formSchema = z.object({
   password: z.string().min(8),
 });
 
-export async function login(params: any, formData: FormData) {
+export async function login(formData: FormData) {
   const inputData = {
     email: formData.get("email"),
     password: formData.get("password"),
@@ -33,5 +34,13 @@ export async function login(params: any, formData: FormData) {
     return { error: "存在しないユーザーです" };
   }
 
-  return { user: data.user };
+  const userId = data.user.id;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      userId,
+    },
+  });
+
+  return { user };
 }

@@ -17,7 +17,7 @@ export default function Profile() {
 
   return (
     <div>
-      <h1>{user?.email || "No email found"}</h1>
+      <h1>{user?.username || "ゲスト"}</h1>
     </div>
   );
 }

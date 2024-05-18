@@ -32,9 +32,7 @@ export default async function Blog() {
       >
         <DocumentPlusIcon className="h-12 w-12" />
       </button>
-      <div>
-        <InputModal show={showModal} onClose={handleCloseModal} />
-      </div>
+      <InputModal show={showModal} onClose={handleCloseModal} />
       {blogs.map((blog) => {
         return <BlogList key={blog.id} {...blog} />;
       })}

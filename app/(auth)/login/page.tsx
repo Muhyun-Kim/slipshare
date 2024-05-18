@@ -17,7 +17,7 @@ export default function Login() {
     setIsLoading(true);
 
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const result = await login(null, formData);
+    const result = await login(formData);
 
     setIsLoading(false);
 

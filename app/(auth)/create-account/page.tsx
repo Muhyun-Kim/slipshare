@@ -20,6 +20,12 @@ export default function CreateAccount() {
             className="bg-transparent rounded-md w-full h-10 focus:outline-none ring-1 focus:ring-2 ring-neutral-200 focus:ring-orange-500 border-none placeholder:text-neutral-400"
           />
           <input
+            type="text"
+            name="username"
+            placeholder="ユーザー名"
+            className="bg-transparent rounded-md w-full h-10 focus:outline-none ring-1 focus:ring-2 ring-neutral-200 focus:ring-orange-500 border-none placeholder:text-neutral-400"
+          />
+          <input
             type="password"
             name="password"
             placeholder="パスワード"
