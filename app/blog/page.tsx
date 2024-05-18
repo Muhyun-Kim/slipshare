@@ -1,40 +1,70 @@
 "use client";
 
 import { DocumentPlusIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputModal from "./InputModal";
-import supabase from "@/lib/supabase";
 import prisma from "@/lib/prisma";
 import BlogList from "./blog-list";
+import type { Blog, User } from "@prisma/client";
+import { fetchBlog } from "./actions";
+import Link from "next/link";
 
-async function fetchBlog() {
-  const blogs = await prisma.blog.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-  return blogs;
+export interface BlogWithAuthor extends Blog {
+  author: User;
 }
 
-export default async function Blog() {
+export default function Blog() {
   const [showModal, setShowModal] = useState(false);
+  const [blogs, setBlogs] = useState<BlogWithAuthor[]>([]);
   const handleCloseModal = () => {
     setShowModal(false);
   };
-  const blogs = await fetchBlog();
+  useEffect(() => {
+    async function getBlogs() {
+      const fetchedBlogs = await fetchBlog();
+      setBlogs(fetchedBlogs);
+    }
+    getBlogs();
+  }, []);
+
+  const handleCreateBlog = async (newBlog: BlogWithAuthor) => {
+    setBlogs((prevBlogs) => [newBlog, ...prevBlogs]);
+  };
+
+  const handleDeleteBlog = async (blogId: number) => {
+    setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId));
+  };
+
+  const handleUpdateBlog = async (updatedBlog: BlogWithAuthor) => {
+    setBlogs((prevBlogs) =>
+      prevBlogs.map((blog) => (blog.id === updatedBlog.id ? updatedBlog : blog))
+    );
+  };
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-5xl p-4 pb-10">Blog 📖</h1>
       <button
+        className="mb-8"
         onClick={() => {
           setShowModal((prev) => !prev);
         }}
       >
         <DocumentPlusIcon className="h-12 w-12" />
       </button>
-      <InputModal show={showModal} onClose={handleCloseModal} />
+      <InputModal
+        show={showModal}
+        onClose={handleCloseModal}
+        onCreate={handleCreateBlog}
+      />
       {blogs.map((blog) => {
-        return <BlogList key={blog.id} {...blog} />;
+        return (
+          <BlogList
+            key={blog.id}
+            blog={blog}
+            onDelete={handleDeleteBlog}
+            onUpdate={handleUpdateBlog}
+          />
+        );
       })}
     </div>
   );
