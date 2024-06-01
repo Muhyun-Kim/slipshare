@@ -42,7 +42,7 @@ export default function Blog() {
   };
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-5xl p-4 pb-10">Blog 📖</h1>
+      <h1 className="text-5xl p-4 pb-10">POST 📖</h1>
       <button
         className="mb-8"
         onClick={() => {

@@ -30,12 +30,12 @@ export default function Navbar() {
           <Link href="/">ホーム</Link>
         </li>
         <li className="pr-4">
-          <Link href="/recipe">レシピ</Link>
+          <Link href="/recipe">一般レシピ</Link>
         </li>
         {user ? (
           <>
             <li className="pr-4">
-              <Link href="/profile">プロフィール</Link>
+              <Link href="/user-recipe">ユーザーレシピ</Link>
             </li>
             <li>
               <Link href="/blog">ブログ</Link>
@@ -48,6 +48,12 @@ export default function Navbar() {
       <ul className="flex">
         {user ? (
           <>
+            <li className="pr-4">
+              <Link href="/my-recipe">マイレシピ</Link>
+            </li>
+            <li className="pr-4">
+              <Link href="/profile">プロフィール</Link>
+            </li>
             <li>
               <button onClick={logout}>ログアウト</button>
             </li>

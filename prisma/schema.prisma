@@ -14,12 +14,14 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  userId   String    @unique
-  username String    @unique
-  detail   String?
-  blogs    Blog[]
-  comments Comment[]
+  id                   Int                   @id @default(autoincrement())
+  userId               String                @unique
+  username             String                @unique
+  detail               String?
+  blogs                Blog[]
+  customRecipes        CustomRecipe[]
+  comments             Comment[]
+  customRecipeComments CustomRecipeComment[]
 }
 
 model Blog {
@@ -42,4 +44,37 @@ model Comment {
   blog      Blog     @relation(fields: [blogId], references: [id])
   authorId  String
   author    User     @relation(fields: [authorId], references: [userId])
+}
+
+model CustomRecipe {
+  id             Int                   @id @default(autoincrement())
+  authorId       String
+  author         User                  @relation(fields: [authorId], references: [userId])
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  glass          String
+  mainIngredient String
+  method         Method
+  ingredients    Json
+  measurements   Json
+  comments       CustomRecipeComment[]
+}
+
+model CustomRecipeComment {
+  id             Int          @id @default(autoincrement())
+  comment        String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  customRecipeId Int
+  customRecipe   CustomRecipe @relation(fields: [customRecipeId], references: [id])
+  authorId       String
+  author         User         @relation(fields: [authorId], references: [userId])
+}
+
+enum Method {
+  STIR
+  SHAKE
+  BUILD
+  BLEND
+  LAYER
 }
