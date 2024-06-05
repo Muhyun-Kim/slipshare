@@ -24,14 +24,6 @@ export default function CreateRecipePage() {
     setSelectedMethod(e.target.value);
   };
 
-  const handleAddIngredient = () => {
-    setIngredients([...ingredients, { value: "" }]);
-  };
-
-  const handleAddMeasurement = () => {
-    setMeasurements([...measurements, { value: "" }]);
-  };
-
   const handleAddIngredientAndMeasurement = () => {
     setIngredients([...ingredients, { value: "" }]);
     setMeasurements([...measurements, { value: "" }]);
@@ -61,6 +53,7 @@ export default function CreateRecipePage() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
     const result = await createRecipe(formData, user!);
+    console.log(result);
   };
 
   return (
