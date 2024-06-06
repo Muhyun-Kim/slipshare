@@ -6,11 +6,11 @@ import useUserStore from "@/store/useUserStore";
 import React, { useState } from "react";
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
 
-const methods = ["Stir", "Shake", "Blend", "Layer", "Build"];
+const methods = ["STIR", "SHAKE", "BUILD", "BLEND", "LAYER"];
 
 export default function CreateRecipePage() {
   const user = useUserStore((state) => state.user);
-  const [selectedMethod, setSelectedMethod] = useState<string>("");
+  const [selectedMethod, setSelectedMethod] = useState<string>("Stir");
   const [ingredients, setIngredients] = useState([{ value: "" }]);
   const [measurements, setMeasurements] = useState([{ value: "" }]);
 
@@ -69,7 +69,12 @@ export default function CreateRecipePage() {
           required
           className="bg-transparent rounded-md w-full h-10 focus:outline-none ring-1 focus:ring-2 ring-neutral-200 focus:ring-orange-500 border-none placeholder:text-neutral-400"
         />
-        <input type="file" name="image" onChange={handleImg} accept="image/*" />
+        <input
+          type="file"
+          name="cocktailImg"
+          onChange={handleImg}
+          accept="image/*"
+        />
         <input
           type="text"
           name="glass"

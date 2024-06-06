@@ -50,13 +50,15 @@ model CustomRecipe {
   id             Int                   @id @default(autoincrement())
   authorId       String
   author         User                  @relation(fields: [authorId], references: [userId])
-  createdAt      DateTime              @default(now())
-  updatedAt      DateTime              @updatedAt
+  cocktailName   String
+  cocktailImg    String?
   glass          String
   mainIngredient String
   method         Method
-  ingredients    Json
-  measurements   Json
+  ingredients    String[]
+  measurements   String[]
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
   comments       CustomRecipeComment[]
 }
 
