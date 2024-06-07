@@ -3,11 +3,9 @@
 import { DocumentPlusIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import InputModal from "./InputModal";
-import prisma from "@/lib/prisma";
 import BlogList from "./blog-list";
 import type { Blog, User } from "@prisma/client";
 import { fetchBlog } from "./actions";
-import Link from "next/link";
 
 export interface BlogWithAuthor extends Blog {
   author: User;

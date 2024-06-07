@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import supabase from "@/lib/supabase";
 import { User } from "@prisma/client";
+import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
 export async function createRecipe(formData: FormData, user: User) {
@@ -28,7 +29,7 @@ export async function createRecipe(formData: FormData, user: User) {
 
   let imageUrl = "";
 
-  if (cocktailImg) {
+  if (cocktailImg.size > 0) {
     const randomFileName = `${uuidv4()}-${cocktailImg.name}`;
     const { data, error } = await supabase.storage
       .from("images")
@@ -55,8 +56,6 @@ export async function createRecipe(formData: FormData, user: User) {
         measurements: inputData.measurements,
       },
     });
-    console.log(newRecipe);
-    return { success: true };
   } catch (error) {
     console.log(error);
     return { error: "Failed to create recipe" };

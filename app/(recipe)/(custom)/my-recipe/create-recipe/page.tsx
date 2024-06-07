@@ -5,6 +5,7 @@ import { createRecipe } from "./actions";
 import useUserStore from "@/store/useUserStore";
 import React, { useState } from "react";
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
+import { redirect } from "next/navigation";
 
 const methods = ["STIR", "SHAKE", "BUILD", "BLEND", "LAYER"];
 
@@ -52,8 +53,7 @@ export default function CreateRecipePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const result = await createRecipe(formData, user!);
-    console.log(result);
+    await createRecipe(formData, user!);
   };
 
   return (
