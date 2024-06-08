@@ -12,7 +12,6 @@ export async function fetchMyRecipes(user: User) {
       authorId: user.userId,
     },
   });
-  console.log(recipes);
   return recipes;
 }
 

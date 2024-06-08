@@ -17,7 +17,6 @@ export default function RecipeDetailWithID({
     };
     fetchData();
   }, [id]);
-  console.log(recipeData);
   return (
     <>
       {recipeData ? (

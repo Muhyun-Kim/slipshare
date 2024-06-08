@@ -5,6 +5,15 @@ import { z } from "zod";
 import supabase from "@/lib/supabase";
 import prisma from "@/lib/prisma";
 
+const checkExistingUsername = async (username: string) => {
+  const isExistingUsername = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+  return isExistingUsername !== null;
+};
+
 const checkConfirmPassword = ({
   password,
   passwordConfirm,
@@ -19,6 +28,15 @@ const formSchema = z
     username: z.string().min(2),
     password: z.string().min(8),
     passwordConfirm: z.string().min(8),
+  })
+  .superRefine(async (data, ctx) => {
+    if (await checkExistingUsername(data.username)) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["username"],
+        message: "Username already exists",
+      });
+    }
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: "Passwords must match",
@@ -37,7 +55,7 @@ export async function createAccount(params: any, formData: FormData) {
     passwordConfirm: formData.get("passwordConfirm"),
   };
 
-  const validationResult = formSchema.safeParse(inputData);
+  const validationResult = await formSchema.safeParseAsync(inputData);
 
   if (!validationResult.success) {
     return validationResult.error.flatten();

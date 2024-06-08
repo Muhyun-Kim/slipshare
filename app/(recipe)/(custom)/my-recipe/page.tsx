@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { deleteMyRecipe, fetchMyRecipes } from "./actions";
 import useUserStore from "@/store/useUserStore";
-import Image from "next/image";
+import CustomRecipeCard from "../CustomRecipeCard";
 
 export default function MyRecipePage() {
   const [myRecipes, setMyRecipes] = useState<CustomRecipe[]>([]);
@@ -37,35 +37,11 @@ export default function MyRecipePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {myRecipes.map((customRecipe) => {
             return (
-              <div className="flex flex-col justify-around p-4 bg-white rounded-lg shadow-md w-full max-w-md">
-                <div className="flex justify-end">
-                  <button onClick={() => handleDeleteMyRecipe(customRecipe.id)}>
-                    <MinusCircleIcon className="h-8 w-8 text-red-500" />
-                  </button>
-                </div>
-                {customRecipe.cocktailImg !== "" ? (
-                  <>
-                    <img
-                      src={customRecipe.cocktailImg!}
-                      alt={customRecipe.cocktailName}
-                      className="w-full h-auto mb-4 rounded-md"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Image
-                      src="/image/sample-cocktail.png"
-                      alt={customRecipe.cocktailName}
-                      width={50}
-                      height={50}
-                      className="w-full h-auto mb-4 rounded-md"
-                    />
-                  </>
-                )}
-                <span className="text-xl text-black font-semibold mb-2">
-                  {customRecipe.cocktailName}
-                </span>
-              </div>
+              <CustomRecipeCard
+                key={customRecipe.id}
+                customRecipe={customRecipe}
+                handleDeleteMyRecipe={handleDeleteMyRecipe}
+              />
             );
           })}
         </div>
