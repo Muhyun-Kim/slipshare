@@ -5,7 +5,7 @@ import { createRecipe } from "./actions";
 import useUserStore from "@/store/useUserStore";
 import React, { useState } from "react";
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const methods = ["STIR", "SHAKE", "BUILD", "BLEND", "LAYER"];
 
@@ -14,6 +14,7 @@ export default function CreateRecipePage() {
   const [selectedMethod, setSelectedMethod] = useState<string>("Stir");
   const [ingredients, setIngredients] = useState([{ value: "" }]);
   const [measurements, setMeasurements] = useState([{ value: "" }]);
+  const router = useRouter();
 
   const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -53,7 +54,12 @@ export default function CreateRecipePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    await createRecipe(formData, user!);
+    const res = await createRecipe(formData, user!);
+    if ("error" in res) {
+      console.log(res.error);
+    } else {
+      router.push("/my-recipe");
+    }
   };
 
   return (

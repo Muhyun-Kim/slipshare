@@ -56,8 +56,8 @@ export async function createRecipe(formData: FormData, user: User) {
         measurements: inputData.measurements,
       },
     });
-  } catch (error) {
-    console.log(error);
+    return newRecipe;
+  } catch (e) {
     return { error: "Failed to create recipe" };
   }
 }
