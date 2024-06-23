@@ -19,8 +19,8 @@ export default function CustomRecipeCard({
 
   return (
     <Link href={`/user-recipe/${customRecipe.id}`}>
-      <div className="flex flex-col justify-around p-4 bg-white rounded-lg shadow-md h-full w-full max-w-md">
-        <div className="flex justify-end">
+      <div className="relative flex flex-col justify-around p-4 bg-white rounded-lg shadow-md h-full w-full max-w-md">
+        <div className="absolute top-0 right-0">
           {user.userId === customRecipe.authorId ? (
             <button onClick={() => handleDeleteMyRecipe(customRecipe.id)}>
               <MinusCircleIcon className="h-8 w-8 text-red-500" />
