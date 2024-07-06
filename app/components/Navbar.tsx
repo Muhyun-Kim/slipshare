@@ -30,12 +30,12 @@ export default function Navbar() {
           <Link href="/">ホーム</Link>
         </li>
         <li className="pr-4">
-          <Link href="/recipe">一般レシピ</Link>
+          <Link href="/recipe">プロのレシピ</Link>
         </li>
         {user ? (
           <>
             <li className="pr-4">
-              <Link href="/user-recipe">ユーザーレシピ</Link>
+              <Link href="/user-recipe">みんなのレシピ</Link>
             </li>
             <li>
               <Link href="/blog">ブログ</Link>
