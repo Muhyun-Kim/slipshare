@@ -1,4 +1,4 @@
-export default function Recipe(drink: any) {
+export default function RecipeCard(drink: any) {
   return (
     <div className="p-4 bg-white rounded-lg shadow-md w-full max-w-md">
       <img
